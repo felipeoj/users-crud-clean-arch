@@ -7,20 +7,18 @@ import java.util.UUID;
 
 // domínio puro e sem depender de frameworks
 public class User {
-    private UUID userId;
     private String userName;
     private String firstName;
     private String lastName;
     private String email;
 
-    public User(UUID userId,
+    public User(
                 String userName,
                 String firstName,
                 String lastName,
                 String email
                 ) {
         validateUserName(userName);
-        this.userId = userId;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,7 +36,6 @@ public class User {
         }
     }
 
-    public UUID getUserId(){return userId;}
     public String getFirstName(){return firstName;}
     public String getLastName(){return lastName;}
     public String getUserName(){return userName;}

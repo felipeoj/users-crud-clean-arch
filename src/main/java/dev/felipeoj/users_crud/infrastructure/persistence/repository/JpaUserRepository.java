@@ -43,6 +43,16 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
+    public boolean existsByEmail(String email) {
+        return jpaRepo.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return jpaRepo.existsByUsername(username);
+    }
+
+    @Override
     public void softDeleteById(UUID userId) {
         Optional<UserEntity> foundEntity = jpaRepo.findById(userId);
 

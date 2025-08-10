@@ -10,6 +10,8 @@ public interface UserRepository {
     User save(User user);
     Optional<User> findById(UUID userId);
     List<User> findAll();
+    boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
     void softDeleteById(UUID userId);
     void hardDeleteById(UUID userId);
 }
