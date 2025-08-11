@@ -32,7 +32,7 @@ public class CreateUserUseCase {
 
         User savedUser = userRepository.save(newUser);
         return new UserResponseDto(
-                savedUser.getUserName(),
+                savedUser.getUsername(),
                 savedUser.getEmail(),
                 savedUser.getFirstName(),
                 savedUser.getLastName()

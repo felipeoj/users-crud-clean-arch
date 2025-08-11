@@ -10,7 +10,7 @@ String lastName
 ) {
     public static UserResponseDto fromDomain(User user){
         return new UserResponseDto(
-                user.getUserName(),
+                user.getUsername(),
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName()

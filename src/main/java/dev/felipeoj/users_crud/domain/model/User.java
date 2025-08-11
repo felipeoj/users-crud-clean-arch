@@ -7,26 +7,26 @@ import java.util.UUID;
 
 // domínio puro e sem depender de frameworks
 public class User {
-    private String userName;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
 
     public User(
-                String userName,
-                String firstName,
-                String lastName,
-                String email
-                ) {
-        validateUserName(userName);
-        this.userName = userName;
+            String username,
+            String email,
+            String firstName,
+            String lastName
+    ) {
+        validateUsername(username);
+        this.username = username;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
     }
 
-        private void validateUserName(String userName){
-            if(userName == null || userName.isBlank()) {
+        private void validateUsername(String username){
+            if(username == null || username.isBlank()) {
                 throw new IllegalArgumentException("Username não pode estar vazio.");}
     }
 
@@ -38,7 +38,7 @@ public class User {
 
     public String getFirstName(){return firstName;}
     public String getLastName(){return lastName;}
-    public String getUserName(){return userName;}
+    public String getUsername(){return username;}
     public String getEmail(){return email;}
 
 
