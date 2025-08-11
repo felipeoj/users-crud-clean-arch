@@ -11,18 +11,31 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private UUID id;
 
+
+    public User(String username, String email, String firstName, String lastName) {
+        validateUsername(username);
+        validateEmail(email);
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     public User(
             String username,
             String email,
             String firstName,
-            String lastName
+            String lastName,
+            UUID id
     ) {
         validateUsername(username);
         this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.id = id;
+
     }
 
         private void validateUsername(String username){
@@ -40,7 +53,23 @@ public class User {
     public String getLastName(){return lastName;}
     public String getUsername(){return username;}
     public String getEmail(){return email;}
+    public UUID getId(){return id;}
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }
 

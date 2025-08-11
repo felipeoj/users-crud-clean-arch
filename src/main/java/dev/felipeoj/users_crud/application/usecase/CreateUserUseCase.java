@@ -1,11 +1,12 @@
 package dev.felipeoj.users_crud.application.usecase;
 
-import dev.felipeoj.users_crud.application.dto.request.CreateUserRequestDto;
 import dev.felipeoj.users_crud.application.dto.response.UserResponseDto;
 import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.exception.UsernameAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.model.User;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
+
+import java.util.UUID;
 
 public class CreateUserUseCase {
     private final UserRepository userRepository;
@@ -14,8 +15,8 @@ public class CreateUserUseCase {
         this.userRepository = userRepository;
     }
 
-    public UserResponseDto createUser(String username, String email,
-                                       String firstName, String lastName){
+    public UserResponseDto execute(String username, String email,
+                                   String firstName, String lastName){
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException(email);
         }
@@ -35,7 +36,9 @@ public class CreateUserUseCase {
                 savedUser.getUsername(),
                 savedUser.getEmail(),
                 savedUser.getFirstName(),
-                savedUser.getLastName()
+                savedUser.getLastName(),
+                savedUser.getId()
+
         );
 
     }
