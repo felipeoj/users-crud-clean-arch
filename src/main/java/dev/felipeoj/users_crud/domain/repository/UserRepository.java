@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface UserRepository {
     User save(User user);
     Optional<User> findById(UUID userId);
-    List<User> findAll();
+    List<User> getAllUsers();
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
     void softDeleteById(UUID userId);

@@ -1,5 +1,6 @@
 package dev.felipeoj.users_crud.application.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.felipeoj.users_crud.domain.model.User;
 
 import java.util.UUID;

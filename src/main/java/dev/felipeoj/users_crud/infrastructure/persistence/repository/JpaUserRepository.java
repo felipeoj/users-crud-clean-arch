@@ -14,31 +14,33 @@ import java.util.stream.Collectors;
 @Repository
 public class JpaUserRepository implements UserRepository {
     private final SpringDataJpaUserRepository jpaRepo;
+    private final UserMapper userMapper;
 
-    public JpaUserRepository(SpringDataJpaUserRepository jpaRepo){
+    public JpaUserRepository(SpringDataJpaUserRepository jpaRepo, UserMapper userMapper){
         this.jpaRepo = jpaRepo;
 
+        this.userMapper = userMapper;
     }
 
     @Override
     public User save(User user){
-        UserEntity entity = UserMapper.INSTANCE.toEntity(user);
+        UserEntity entity = userMapper.toEntity(user);
         UserEntity savedEntity = jpaRepo.save(entity);
-        return UserMapper.INSTANCE.toDomain(savedEntity);
+        return userMapper.toDomain(savedEntity);
     }
 
     @Override
     public Optional<User> findById(UUID userId){
         Optional<UserEntity> foundEntity = jpaRepo.findById(userId);
-        return foundEntity.map(entity -> UserMapper.INSTANCE.toDomain(entity));
+        return foundEntity.map(userMapper::toDomain);
 
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> getAllUsers() {
         List<UserEntity> entities = jpaRepo.findAll();
         return entities.stream()
-                .map(entity -> UserMapper.INSTANCE.toDomain(entity))
+                .map( userMapper::toDomain)
                 .collect(Collectors.toList());
     }
 

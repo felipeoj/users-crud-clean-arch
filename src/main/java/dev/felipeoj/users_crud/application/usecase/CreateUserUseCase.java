@@ -15,7 +15,7 @@ public class CreateUserUseCase {
         this.userRepository = userRepository;
     }
 
-    public UserResponseDto execute(String username, String email,
+    public User execute(String username, String email,
                                    String firstName, String lastName){
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException(email);
@@ -24,22 +24,8 @@ public class CreateUserUseCase {
             throw new UsernameAlreadyExistsException(username);
         }
 
-        User newUser = new User(
-                username,
-                email,
-                firstName,
-                lastName
+        User newUser = new User(username, email, firstName, lastName, null
         );
-
-        User savedUser = userRepository.save(newUser);
-        return new UserResponseDto(
-                savedUser.getUsername(),
-                savedUser.getEmail(),
-                savedUser.getFirstName(),
-                savedUser.getLastName(),
-                savedUser.getId()
-
-        );
-
+        return userRepository.save(newUser);
     }
 }

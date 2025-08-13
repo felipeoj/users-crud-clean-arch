@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,7 +27,7 @@ public class UserController {
             ){
         UserResponseDto responseDto = userService.createPerson(requestDto);
         return ResponseEntity
-                .created(URI.create("/api/v1/users/" + responseDto.username()))
+                .created(URI.create("/api/v1/users/" + responseDto.id()))
                 .body(responseDto);
     }
 
@@ -37,5 +38,12 @@ public class UserController {
     ){
         UserResponseDto responseDto = userService.updatePerson(id, requestDto);
         return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<UserResponseDto>> getAllUsers(){
+            List<UserResponseDto> allUsers = userService.getAllPersons();
+            return ResponseEntity.ok(allUsers);
+
     }
 }

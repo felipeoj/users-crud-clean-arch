@@ -1,11 +1,18 @@
 package dev.felipeoj.users_crud.application.dto.request;
 
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record CreateUserRequestDto(
+//
+//        @Id
+//        UUID id,
+
         @Pattern(
                 regexp = "^(?![.])(?!.*[.]$)[a-zA-Z0-9_.]+$"
         )

@@ -1,6 +1,7 @@
 package dev.felipeoj.users_crud.domain.model;
 
 
+
 import java.util.UUID;
 
 
@@ -14,28 +15,14 @@ public class User {
     private UUID id;
 
 
-    public User(String username, String email, String firstName, String lastName) {
+    public User(String username, String email, String firstName, String lastName, UUID id) {
         validateUsername(username);
         validateEmail(email);
         this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-    public User(
-            String username,
-            String email,
-            String firstName,
-            String lastName,
-            UUID id
-    ) {
-        validateUsername(username);
-        this.username = username;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.id = id;
-
     }
 
         private void validateUsername(String username){
