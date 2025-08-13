@@ -5,6 +5,7 @@ import dev.felipeoj.users_crud.application.dto.request.CreateUserRequestDto;
 import dev.felipeoj.users_crud.application.dto.request.UpdateUserRequestDto;
 import dev.felipeoj.users_crud.application.dto.response.UserResponseDto;
 import dev.felipeoj.users_crud.application.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,17 @@ public class UserController {
     public ResponseEntity<List<UserResponseDto>> getAllUsers(){
             List<UserResponseDto> allUsers = userService.getAllPersons();
             return ResponseEntity.ok(allUsers);
+    }
 
+    @DeleteMapping("/update/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable UUID id) {
+        userService.softDeletePerson(id);
+    }
+
+    @DeleteMapping("/hard/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void hardDelete(@PathVariable UUID id){
+        userService.deleteHardPerson(id);
     }
 }

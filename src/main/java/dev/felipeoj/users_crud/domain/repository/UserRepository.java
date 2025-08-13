@@ -12,6 +12,7 @@ public interface UserRepository {
     List<User> getAllUsers();
     boolean existsByEmail(String email);
     boolean existsByUsername(String username);
+    boolean existsById(UUID id);
     void softDeleteById(UUID userId);
     void hardDeleteById(UUID userId);
 }

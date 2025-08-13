@@ -58,6 +58,15 @@ public class User {
         this.email = email;
     }
 
+    private boolean deleted = false;
+
+    public void markAsDeleted(){
+        this.deleted = true;
+    }
+
+    public boolean isDeleted(){
+        return deleted;
+    }
 }
 
 

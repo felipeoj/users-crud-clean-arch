@@ -5,6 +5,7 @@ import dev.felipeoj.users_crud.domain.repository.UserRepository;
 import dev.felipeoj.users_crud.infrastructure.persistence.entity.UserEntity;
 import dev.felipeoj.users_crud.infrastructure.persistence.mapper.UserMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,16 +56,16 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
+    public boolean existsById(UUID id) {
+        return false;
+    }
+
+    @Override
+    @Transactional
     public void softDeleteById(UUID userId) {
-        Optional<UserEntity> foundEntity = jpaRepo.findById(userId);
-
-        if (foundEntity.isPresent()) {
-            UserEntity entity = foundEntity.get();
+        jpaRepo.findById(userId).ifPresent(entity -> {
             entity.setDeleted(true);
-            jpaRepo.save(entity);
-
-        }
-
+        });
     }
 
     @Override

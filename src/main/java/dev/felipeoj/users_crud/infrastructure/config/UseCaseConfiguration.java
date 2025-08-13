@@ -2,6 +2,7 @@ package dev.felipeoj.users_crud.infrastructure.config;
 
 import dev.felipeoj.users_crud.application.usecase.CreateUserUseCase;
 import dev.felipeoj.users_crud.application.usecase.GetAllUsersUseCase;
+import dev.felipeoj.users_crud.application.usecase.SoftDeleteUseCase;
 import dev.felipeoj.users_crud.application.usecase.UpdateUserUseCase;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +23,10 @@ public class UseCaseConfiguration {
     @Bean
     public GetAllUsersUseCase getAllUsersUseCase(UserRepository userRepository){
         return new GetAllUsersUseCase(userRepository);
+    }
+
+    @Bean
+    public SoftDeleteUseCase softDeleteUseCase(UserRepository userRepository){
+        return new SoftDeleteUseCase(userRepository);
     }
 }
