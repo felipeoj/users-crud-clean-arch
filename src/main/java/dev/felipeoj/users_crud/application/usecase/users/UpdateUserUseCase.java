@@ -1,4 +1,4 @@
-package dev.felipeoj.users_crud.application.usecase;
+package dev.felipeoj.users_crud.application.usecase.users;
 
 import dev.felipeoj.users_crud.application.dto.request.UpdateUserRequestDto;
 import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;

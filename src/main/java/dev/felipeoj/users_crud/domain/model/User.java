@@ -25,6 +25,56 @@ public class User {
         this.id = id;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String username;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private UUID id; // Pode ser null
+        private boolean deleted = false;
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        // Método opcional para casos onde quer setar o ID manualmente
+        public Builder id(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public User build() {
+            // Validações antes de construir
+            if (username == null || username.isBlank()) {
+                throw new IllegalArgumentException("Username não pode estar vazio");
+            }
+            if (email == null || email.isBlank()) {
+                throw new IllegalArgumentException("Email não pode estar vazio");
+            }
+
+            return new User(username, email, firstName, lastName, id); // ID pode ser null
+        }
+    }
         private void validateUsername(String username){
             if(username == null || username.isBlank()) {
                 throw new IllegalArgumentException("Username não pode estar vazio.");}
@@ -45,15 +95,12 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }

@@ -1,17 +1,19 @@
 package dev.felipeoj.users_crud.infrastructure.config;
 
-import dev.felipeoj.users_crud.application.usecase.CreateUserUseCase;
-import dev.felipeoj.users_crud.application.usecase.GetAllUsersUseCase;
-import dev.felipeoj.users_crud.application.usecase.SoftDeleteUseCase;
-import dev.felipeoj.users_crud.application.usecase.UpdateUserUseCase;
+import dev.felipeoj.users_crud.application.usecase.users.CreateUserUseCase;
+import dev.felipeoj.users_crud.application.usecase.users.GetAllUsersUseCase;
+import dev.felipeoj.users_crud.application.usecase.users.SoftDeleteUseCase;
+import dev.felipeoj.users_crud.application.usecase.users.UpdateUserUseCase;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
+import dev.felipeoj.users_crud.domain.service.UserService;
+import dev.felipeoj.users_crud.infrastructure.persistence.mapper.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UseCaseConfiguration {
     @Bean
-    public CreateUserUseCase createUserUseCase(UserRepository userRepository){
+    public CreateUserUseCase createUserUseCase(UserRepository userRepository) {
         return new CreateUserUseCase(userRepository);
     }
 
@@ -21,8 +23,8 @@ public class UseCaseConfiguration {
     }
 
     @Bean
-    public GetAllUsersUseCase getAllUsersUseCase(UserRepository userRepository){
-        return new GetAllUsersUseCase(userRepository);
+    public GetAllUsersUseCase getAllUsersUseCase(UserRepository userRepository, UserMapper userMapper) {
+        return new GetAllUsersUseCase(userRepository, userMapper);
     }
 
     @Bean

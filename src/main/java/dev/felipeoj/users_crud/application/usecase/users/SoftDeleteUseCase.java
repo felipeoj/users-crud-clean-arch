@@ -1,7 +1,6 @@
-package dev.felipeoj.users_crud.application.usecase;
+package dev.felipeoj.users_crud.application.usecase.users;
 
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
