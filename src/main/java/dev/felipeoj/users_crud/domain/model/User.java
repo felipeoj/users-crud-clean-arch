@@ -34,7 +34,7 @@ public class User {
         private String firstName;
         private String lastName;
         private String email;
-        private UUID id; // Pode ser null
+        private UUID id;
         private boolean deleted = false;
 
         public Builder username(String username) {
@@ -57,14 +57,12 @@ public class User {
             return this;
         }
 
-        // Método opcional para casos onde quer setar o ID manualmente
         public Builder id(UUID id) {
             this.id = id;
             return this;
         }
 
         public User build() {
-            // Validações antes de construir
             if (username == null || username.isBlank()) {
                 throw new IllegalArgumentException("Username não pode estar vazio");
             }
@@ -72,7 +70,7 @@ public class User {
                 throw new IllegalArgumentException("Email não pode estar vazio");
             }
 
-            return new User(username, email, firstName, lastName, id); // ID pode ser null
+            return new User(username, email, firstName, lastName, id);
         }
     }
         private void validateUsername(String username){
