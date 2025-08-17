@@ -47,4 +47,7 @@ public class UserEntity {
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
+    @Column(name = "password", nullable = false, length = 20)
+    private String password;
+
 }

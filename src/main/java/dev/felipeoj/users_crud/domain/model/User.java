@@ -13,9 +13,10 @@ public class User {
     private String lastName;
     private String email;
     private UUID id;
+    private String password;
 
 
-    public User(String username, String email, String firstName, String lastName, UUID id) {
+    public User(String username, String email, String firstName, String lastName, UUID id, String password) {
         validateUsername(username);
         validateEmail(email);
         this.username = username;
@@ -23,10 +24,15 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
+        this.password = password;
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public static final class Builder {
@@ -36,6 +42,7 @@ public class User {
         private String email;
         private UUID id;
         private boolean deleted = false;
+        private String password;
 
         public Builder username(String username) {
             this.username = username;
@@ -62,6 +69,11 @@ public class User {
             return this;
         }
 
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
         public User build() {
             if (username == null || username.isBlank()) {
                 throw new IllegalArgumentException("Username não pode estar vazio");
@@ -70,7 +82,7 @@ public class User {
                 throw new IllegalArgumentException("Email não pode estar vazio");
             }
 
-            return new User(username, email, firstName, lastName, id);
+            return new User(username, email, firstName, lastName, id, password);
         }
     }
         private void validateUsername(String username){
@@ -78,10 +90,37 @@ public class User {
                 throw new IllegalArgumentException("Username não pode estar vazio.");}
     }
 
-    private void validateEmail(String email){
-        if(email == null || email.isBlank()){
+    private void validateEmail(String email) {
+        if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Email não pode ser vazio.");
         }
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!email.matches(emailRegex)) {
+            throw new IllegalArgumentException("Email inválido.");
+        }
+    }
+
+    public void setPassword(String password) {
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("A senha não pode ser vazia.");
+        }
+        if (password.length() < 8) {
+            throw new IllegalArgumentException("A Senha deve conter no minimo 8 caracteres.");
+        }
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
+        if (!password.matches(regex)) {
+            throw new IllegalArgumentException(
+                    """
+                            A senha deve conter:
+                            - 1 letra maiúscula (A-Z)
+                            - 1 letra minúscula (a-z)
+                            - 1 número (0-9)
+                            - 1 símbolo especial (@$!%*?&)
+                            - Mínimo de 8 caracteres"""
+            );
+        }
+        this.password = password;
     }
 
     public String getFirstName(){return firstName;}
@@ -100,6 +139,7 @@ public class User {
         this.username = username;
     }
     public void setEmail(String email) {
+        validateEmail(email);
         this.email = email;
     }
 
@@ -112,6 +152,8 @@ public class User {
     public boolean isDeleted(){
         return deleted;
     }
+
+
 }
 
 
