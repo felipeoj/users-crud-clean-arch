@@ -1,4 +1,4 @@
-package dev.felipeoj.users_crud.infrastructure.service;
+package dev.felipeoj.users_crud.infrastructure.service.users;
 
 import dev.felipeoj.users_crud.domain.model.User;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;

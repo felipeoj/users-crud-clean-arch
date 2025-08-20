@@ -1,6 +1,5 @@
 package dev.felipeoj.users_crud.application.usecase.auth;
 
-import dev.felipeoj.users_crud.application.dto.request.CreateUserRequestDto;
 import dev.felipeoj.users_crud.application.dto.request.RegisterUserRequestDto;
 import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.exception.UsernameAlreadyExistsException;
@@ -25,16 +24,14 @@ public class RegisterUserUseCase {
             throw new UsernameAlreadyExistsException(registerUserRequestDto.username());
         }
 
+        String hashedPassword = passwordEncoder.encode(registerUserRequestDto.password());
         User newUser = User.builder()
                 .username(registerUserRequestDto.username())
                 .email(registerUserRequestDto.email())
                 .firstName(registerUserRequestDto.firstName())
                 .lastName(registerUserRequestDto.lastName())
-                .password(registerUserRequestDto.password())
+                .password(hashedPassword)
                 .build();
-
-        String hashedPassword = passwordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(hashedPassword);
         return userRepository.save(newUser);
     }
 }

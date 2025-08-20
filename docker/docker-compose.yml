@@ -1,7 +1,7 @@
 services:
   mysql:
     container_name: 'users-crud-mysql'
-    image: 'mysql:8.0'
+    image: 'mysql:8.0.36'
     environment:
       - 'MYSQL_DATABASE=users_crud'
       - 'MYSQL_PASSWORD=secret'
@@ -11,7 +11,8 @@ services:
       - '3307:3306'
     volumes:
       - mysql_data:/var/lib/mysql
+    restart: unless-stopped
 
 volumes:
   mysql_data:
-    # Guia de referência: https://spring.io/guides/gs/accessing-data-mysql
+    driver: local

@@ -38,6 +38,29 @@ public class JpaUserRepository implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        Optional<UserEntity> foundEntity = jpaRepo.findByEmail(email);
+        return foundEntity.map(userMapper::toDomain);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Optional<UserEntity> foundEntity = jpaRepo.findByUsername(username);
+        return foundEntity.map(userMapper::toDomain);
+    }
+
+    @Override
+    public Optional<User> findByUsernameOrEmail(String identifier) {
+        Optional<UserEntity> foundEntity = jpaRepo.findByUsername(identifier);
+        return foundEntity.map(userMapper::toDomain);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return List.of();
+    }
+
+    @Override
     public List<User> getAllUsers() {
         List<UserEntity> entities = jpaRepo.findAll();
         return entities.stream()
@@ -57,7 +80,7 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     public boolean existsById(UUID id) {
-        return false;
+        return jpaRepo.existsById(id);
     }
 
     @Override

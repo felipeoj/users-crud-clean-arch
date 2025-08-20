@@ -18,7 +18,7 @@ public class UpdateUserUseCase {
 
     public User execute(UUID userId, UpdateUserRequestDto requestDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .orElseThrow(() -> new UserNotFoundException("Usuario não encontrado"));
 
         if(requestDto.email() != null &&
         !requestDto.email().equals(user.getEmail()) &&

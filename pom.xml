@@ -6,12 +6,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.4</version>
-        <relativePath/> </parent>
+        <relativePath/>
+    </parent>
     <groupId>dev.felipeoj</groupId>
     <artifactId>users-crud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>users-crud</name>
-    <description> CRUD de usuários com Spring Boot</description>
+    <description>CRUD de usuários com Spring Boot</description>
     <url/>
     <licenses>
         <license/>
@@ -29,6 +30,8 @@
         <java.version>17</java.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <lombok.version>1.18.30</lombok.version>
+        <!-- Versões atualizadas do Flyway -->
+        <flyway.version>11.7.2</flyway.version>
     </properties>
     <dependencies>
         <dependency>
@@ -52,13 +55,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Flyway atualizado com versão específica -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
 
         <dependency>
@@ -67,11 +74,15 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- MySQL Connector atualizado -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
+            <version>9.3.0</version>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -133,7 +144,18 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- Plugin do Flyway para comandos via Maven -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <url>jdbc:mysql://localhost:3307/users_crud?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC</url>
+                    <user>seu_usuario</user>
+                    <password>sua_senha</password>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>

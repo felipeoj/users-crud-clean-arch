@@ -5,7 +5,6 @@ import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.exception.UsernameAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.model.User;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
-import dev.felipeoj.users_crud.domain.service.UserService;
 
 public class CreateUserUseCase {
     private final UserRepository userRepository;

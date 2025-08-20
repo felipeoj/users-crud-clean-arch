@@ -24,7 +24,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
-        this.password = password;
+        setPassword(password);
     }
 
     public static Builder builder() {
@@ -82,7 +82,8 @@ public class User {
                 throw new IllegalArgumentException("Email não pode estar vazio");
             }
 
-            return new User(username, email, firstName, lastName, id, password);
+            User user = new User(username, email, firstName, lastName, id, password);
+            return user;
         }
     }
         private void validateUsername(String username){
@@ -91,6 +92,7 @@ public class User {
     }
 
     private void validateEmail(String email) {
+
         if (email == null || email.isBlank()) {
             throw new IllegalArgumentException("Email não pode ser vazio.");
         }
@@ -101,6 +103,10 @@ public class User {
     }
 
     public void setPassword(String password) {
+        if (password != null && password.startsWith("$2a$")) {
+            this.password = password;
+            return;
+        }
         if (password == null || password.isBlank()) {
             throw new IllegalArgumentException("A senha não pode ser vazia.");
         }
