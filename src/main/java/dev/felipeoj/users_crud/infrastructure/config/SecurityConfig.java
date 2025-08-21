@@ -4,6 +4,9 @@ import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import dev.felipeoj.users_crud.domain.service.JwtTokenService;
+import dev.felipeoj.users_crud.infrastructure.security.JwtCookieAuthenticationFilter;
+import dev.felipeoj.users_crud.infrastructure.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
 import java.security.interfaces.RSAPrivateKey;
@@ -30,7 +34,16 @@ public class SecurityConfig {
     private RSAPrivateKey privateKey;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            JwtTokenService jwtTokenService,
+            CustomUserDetailsService customUserDetailsService
+    ) throws Exception {
+
+        JwtCookieAuthenticationFilter jwtFilter = new JwtCookieAuthenticationFilter(
+                jwtTokenService,
+                customUserDetailsService
+        );
 
         http
                 .authorizeHttpRequests(auth -> auth
@@ -38,18 +51,19 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())
-                .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults()))
-                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(oauth2ResourceServer ->
+                        oauth2ResourceServer.jwt(Customizer.withDefaults())
+                )
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers
                         .xssProtection(xssProtection -> xssProtection
                                 .headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-
                         .contentSecurityPolicy(csp -> csp
                                 .policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline' cdn.example.com; style-src 'self' 'unsafe-inline'"))
-
-                        .frameOptions(frameOptions -> frameOptions
-                                .deny()
-                        )
+                        .frameOptions(frameOptions -> frameOptions.deny())
                         .httpStrictTransportSecurity(httpStrictTransportSecurity -> httpStrictTransportSecurity
                                 .includeSubDomains(true)
                                 .preload(true)
@@ -71,6 +85,5 @@ public class SecurityConfig {
     JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
-
 
 }

@@ -21,9 +21,7 @@ public class LoginUseCase {
     public AuthResponseDto login(LoginRequestDto loginRequestDto) {
         boolean isEmail = loginRequestDto.loginId().contains("@");
 
-        Optional<User> user = isEmail
-                ? userRepository.findByEmail(loginRequestDto.loginId())
-                : userRepository.findByUsername(loginRequestDto.loginId());
+        Optional<User> user = userRepository.findByUsernameOrEmail(loginRequestDto.loginId());
 
         if(user.isEmpty() || !passwordEncoder.matches(loginRequestDto.password(), user.get().getPassword())) {
             throw new InvalidCredentialsException();

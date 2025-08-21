@@ -52,6 +52,9 @@ public class JpaUserRepository implements UserRepository {
     @Override
     public Optional<User> findByUsernameOrEmail(String identifier) {
         Optional<UserEntity> foundEntity = jpaRepo.findByUsername(identifier);
+        if(foundEntity.isEmpty()){
+            foundEntity = jpaRepo.findByEmail(identifier);
+        }
         return foundEntity.map(userMapper::toDomain);
     }
 

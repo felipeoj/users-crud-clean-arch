@@ -5,7 +5,9 @@ import dev.felipeoj.users_crud.domain.model.User;
 import dev.felipeoj.users_crud.infrastructure.persistence.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     /**
