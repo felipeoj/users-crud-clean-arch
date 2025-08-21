@@ -1,6 +1,5 @@
 package dev.felipeoj.users_crud.application.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.felipeoj.users_crud.domain.model.User;
 
 import java.util.UUID;
@@ -15,8 +14,8 @@ public record UserResponseDto(
 ) {
     public static UserResponseDto fromDomain(User user){
         return new UserResponseDto(
-                user.getUsername(),
-                user.getEmail(),
+                user.getUsername().getValue(),
+                user.getEmail().getValue(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getId()

@@ -51,9 +51,9 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable())
-                .oauth2ResourceServer(oauth2ResourceServer ->
-                        oauth2ResourceServer.jwt(Customizer.withDefaults())
-                )
+//                .oauth2ResourceServer(oauth2ResourceServer ->
+//                        oauth2ResourceServer.jwt(Customizer.withDefaults())
+//                )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

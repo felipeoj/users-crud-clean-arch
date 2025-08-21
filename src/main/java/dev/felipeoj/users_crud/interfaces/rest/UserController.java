@@ -36,7 +36,7 @@ public class UserController {
     public ResponseEntity<UserResponseDto> createUser(
             @Valid  @RequestBody CreateUserRequestDto requestDto
             ){
-        UserResponseDto responseDto = userMapper.toResponseDto(createUserUseCase.execute(requestDto));
+        UserResponseDto responseDto = userMapper.mapToResponseDto(createUserUseCase.execute(requestDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 

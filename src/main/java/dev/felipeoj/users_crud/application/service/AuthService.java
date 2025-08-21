@@ -19,7 +19,7 @@ public class AuthService {
 
     public ResponseEntity<Void> login(LoginRequestDto requestDto) {
         AuthResponseDto authResponse = loginUseCase.login(requestDto);
-        ResponseCookie cookie = ResponseCookie.from("cookie", authResponse.accessToken())
+        ResponseCookie cookie = ResponseCookie.from("jwt", authResponse.accessToken())
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")

@@ -19,11 +19,9 @@ public class LoginUseCase {
     private static final long TOKEN_EXPIRATION_SECONDS = 1800L;
 
     public AuthResponseDto login(LoginRequestDto loginRequestDto) {
-        boolean isEmail = loginRequestDto.loginId().contains("@");
-
         Optional<User> user = userRepository.findByUsernameOrEmail(loginRequestDto.loginId());
 
-        if(user.isEmpty() || !passwordEncoder.matches(loginRequestDto.password(), user.get().getPassword())) {
+        if(user.isEmpty() || !passwordEncoder.matches(loginRequestDto.password(), user.get().getPassword().getValue())) {
             throw new InvalidCredentialsException();
         }
 

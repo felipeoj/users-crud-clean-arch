@@ -4,6 +4,9 @@ import dev.felipeoj.users_crud.application.dto.request.RegisterUserRequestDto;
 import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.exception.UsernameAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.model.User;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Email;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Password;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Username;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
 import dev.felipeoj.users_crud.domain.service.PasswordEncoder;
 
@@ -26,11 +29,11 @@ public class RegisterUserUseCase {
 
         String hashedPassword = passwordEncoder.encode(registerUserRequestDto.password());
         User newUser = User.builder()
-                .username(registerUserRequestDto.username())
-                .email(registerUserRequestDto.email())
+                .username(new Username(registerUserRequestDto.username()))
+                .email(new Email(registerUserRequestDto.email()))
                 .firstName(registerUserRequestDto.firstName())
                 .lastName(registerUserRequestDto.lastName())
-                .password(hashedPassword)
+                .password(new Password(hashedPassword))
                 .build();
         return userRepository.save(newUser);
     }

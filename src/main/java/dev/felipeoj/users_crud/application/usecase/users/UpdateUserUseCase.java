@@ -5,6 +5,8 @@ import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.exception.UserNotFoundException;
 import dev.felipeoj.users_crud.domain.exception.UsernameAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.model.User;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Email;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Username;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
 
 import java.util.UUID;
@@ -21,30 +23,26 @@ public class UpdateUserUseCase {
                 .orElseThrow(() -> new UserNotFoundException("Usuario não encontrado"));
 
         if(requestDto.email() != null &&
-        !requestDto.email().equals(user.getEmail()) &&
+        !requestDto.email().equals(user.getEmail().getValue()) &&
                 userRepository.existsByEmail(requestDto.email())) {
-            throw new EmailAlreadyExistsException(user.getEmail());
+            throw new EmailAlreadyExistsException(user.getEmail().getValue());
         }
 
         if(requestDto.username() != null &&
-        !requestDto.username().equals(user.getUsername()) &&
+        !requestDto.username().equals(user.getUsername().getValue()) &&
         userRepository.existsByUsername(requestDto.username())) {
-            throw new UsernameAlreadyExistsException(user.getFirstName());
+            throw new UsernameAlreadyExistsException(user.getUsername().getValue());
         }
 
-        if (requestDto.username() != null) {
-            user.setUsername(requestDto.username());
-        }
-        if (requestDto.firstName() != null) {
-            user.setFirstName(requestDto.firstName());
-        }
-        if (requestDto.lastName() != null) {
-            user.setLastName(requestDto.lastName());
-        }
-        if (requestDto.email() != null) {
-            user.setEmail(requestDto.email());
-        }
+        User updatedUser = User.builder()
+                .username(requestDto.username() != null ? new Username(requestDto.username()) : user.getUsername())
+                .firstName(requestDto.firstName() != null ? requestDto.firstName() : user.getFirstName())
+                .lastName(requestDto.lastName() != null ? requestDto.lastName() : user.getLastName())
+                .email(requestDto.email() != null ? new Email(requestDto.email()) : user.getEmail())
+                .id(user.getId())
+                .password(user.getPassword())
+                .build();
 
-        return userRepository.save(user);
+        return userRepository.save(updatedUser);
     }
 }

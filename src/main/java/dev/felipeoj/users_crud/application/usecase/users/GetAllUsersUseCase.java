@@ -19,7 +19,7 @@ public class GetAllUsersUseCase {
     public List<UserResponseDto> execute(){
         List<User> users = userRepository.getAllUsers();
         return users.stream()
-                .map(userMapper::toResponseDto)
+                .map(userMapper::mapToResponseDto)
                 .collect(Collectors.toList());
     }
 }

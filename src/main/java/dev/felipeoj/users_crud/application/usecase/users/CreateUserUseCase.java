@@ -4,6 +4,8 @@ import dev.felipeoj.users_crud.application.dto.request.CreateUserRequestDto;
 import dev.felipeoj.users_crud.domain.exception.EmailAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.exception.UsernameAlreadyExistsException;
 import dev.felipeoj.users_crud.domain.model.User;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Email;
+import dev.felipeoj.users_crud.domain.model.valueobjects.Username;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
 
 public class CreateUserUseCase {
@@ -22,8 +24,8 @@ public class CreateUserUseCase {
         }
 
         User newUser = User.builder()
-                .username(createUserRequestDto.username())
-                .email(createUserRequestDto.email())
+                .username(new Username(createUserRequestDto.username()))
+                .email(new Email(createUserRequestDto.email()))
                 .firstName(createUserRequestDto.firstName())
                 .lastName(createUserRequestDto.lastName())
                 .build();

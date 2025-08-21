@@ -28,8 +28,8 @@ public class CustomUserDetailsService  implements UserDetailsService {
             }
 
             return new org.springframework.security.core.userdetails.User(
-                    user.get().getUsername(),
-                    user.get().getPassword(),
+                    user.get().getUsername().getValue(),
+                    user.get().getPassword().getValue(),
                     Collections.singletonList(new SimpleGrantedAuthority("USER"))
             );
         } catch (IllegalArgumentException e) {
