@@ -8,7 +8,7 @@ import dev.felipeoj.users_crud.domain.model.valueobjects.Email;
 import dev.felipeoj.users_crud.domain.model.valueobjects.Password;
 import dev.felipeoj.users_crud.domain.model.valueobjects.Username;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
-import dev.felipeoj.users_crud.domain.service.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class RegisterUserUseCase {
     private final UserRepository userRepository;

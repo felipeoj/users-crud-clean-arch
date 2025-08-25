@@ -30,11 +30,11 @@ public class JwtCookieAuthenticationFilter extends OncePerRequestFilter {
         try {
             String jwtToken = extractJwtFromCookie(request);
 
-            if (jwtToken != null && jwtTokenService.validateToken(jwtToken))  {
-                String username = jwtTokenService.extractUsername(jwtToken);
+            if (jwtToken != null && jwtTokenService.validateToken(jwtToken)) {
+                String userId = jwtTokenService.extractUserId(jwtToken);
 
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId);
 
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails,

@@ -6,8 +6,8 @@ import dev.felipeoj.users_crud.domain.exception.InvalidCredentialsException;
 import dev.felipeoj.users_crud.domain.model.User;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
 import dev.felipeoj.users_crud.domain.service.JwtTokenService;
-import dev.felipeoj.users_crud.domain.service.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -24,9 +24,11 @@ public class LoginUseCase {
         if(user.isEmpty() || !passwordEncoder.matches(loginRequestDto.password(), user.get().getPassword().getValue())) {
             throw new InvalidCredentialsException();
         }
-
-        String jwtToken = jwtTokenService.generateToken(user.get());
-        return new AuthResponseDto(jwtToken, TOKEN_EXPIRATION_SECONDS);
-
+        String accessToken = jwtTokenService.generateToken(user.get());
+        String refreshToken = jwtTokenService.generateRefreshToken(user.get().getId().toString());
+        return new AuthResponseDto("Bearer",
+                accessToken,
+                refreshToken,
+                TOKEN_EXPIRATION_SECONDS);
     }
 }

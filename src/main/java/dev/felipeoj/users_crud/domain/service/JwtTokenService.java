@@ -4,6 +4,9 @@ import dev.felipeoj.users_crud.domain.model.User;
 
 public interface JwtTokenService {
     String generateToken(User user);
-    String extractUsername(String token);
+    String generateRefreshToken(String userId);
+    String extractUserId(String token);
     boolean validateToken(String token);
+    String refreshAccessToken(String refreshToken);
+    void invalidateToken(String token);
 }

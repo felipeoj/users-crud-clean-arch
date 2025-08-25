@@ -7,20 +7,14 @@ import dev.felipeoj.users_crud.application.usecase.users.GetAllUsersUseCase;
 import dev.felipeoj.users_crud.application.usecase.users.SoftDeleteUseCase;
 import dev.felipeoj.users_crud.application.usecase.users.UpdateUserUseCase;
 import dev.felipeoj.users_crud.domain.service.JwtTokenService;
-import dev.felipeoj.users_crud.domain.service.PasswordEncoder;
-import dev.felipeoj.users_crud.infrastructure.service.BCryptPasswordEncoder;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
 import dev.felipeoj.users_crud.infrastructure.persistence.mapper.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class UseCaseConfiguration {
-
-    @Bean
-    public PasswordEncoder customPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public CreateUserUseCase createUserUseCase(UserRepository userRepository) {
