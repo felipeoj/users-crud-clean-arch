@@ -24,7 +24,7 @@ public class LoginUseCase {
         if(user.isEmpty() || !passwordEncoder.matches(loginRequestDto.password(), user.get().getPassword().getValue())) {
             throw new InvalidCredentialsException();
         }
-        String accessToken = jwtTokenService.generateToken(user.get());
+        String accessToken = jwtTokenService.generateAccessToken(user.get());
         String refreshToken = jwtTokenService.generateRefreshToken(user.get().getId().toString());
         return new AuthResponseDto("Bearer",
                 accessToken,

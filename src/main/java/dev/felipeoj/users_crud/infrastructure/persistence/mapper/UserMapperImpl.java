@@ -30,6 +30,7 @@ public class UserMapperImpl implements UserMapper {
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .password(new Password(entity.getPassword()))
+                .id(entity.getId())
                 .build();
     }
 

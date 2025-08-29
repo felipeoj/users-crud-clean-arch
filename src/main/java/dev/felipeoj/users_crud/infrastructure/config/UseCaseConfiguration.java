@@ -1,6 +1,7 @@
 package dev.felipeoj.users_crud.infrastructure.config;
 
 import dev.felipeoj.users_crud.application.usecase.auth.LoginUseCase;
+import dev.felipeoj.users_crud.application.usecase.auth.RefreshTokenUseCase;
 import dev.felipeoj.users_crud.application.usecase.auth.RegisterUserUseCase;
 import dev.felipeoj.users_crud.application.usecase.users.CreateUserUseCase;
 import dev.felipeoj.users_crud.application.usecase.users.GetAllUsersUseCase;
@@ -41,6 +42,11 @@ public class UseCaseConfiguration {
             UserRepository userRepository,
             PasswordEncoder customPasswordEncoder) {
         return new RegisterUserUseCase(userRepository, customPasswordEncoder);
+    }
+
+    @Bean
+    public RefreshTokenUseCase  refreshTokenUseCase(JwtTokenService jwtTokenService) {
+        return new RefreshTokenUseCase(jwtTokenService);
     }
 
     @Bean

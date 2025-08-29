@@ -29,7 +29,7 @@ public class JwtTokenServiceImpl  implements JwtTokenService {
 
 
     @Override
-    public String generateToken(User user) {
+    public String generateAccessToken(User user) {
 
         var claims = JwtClaimsSet.builder()
                 .issuer("CRUD-2025")
@@ -101,7 +101,7 @@ public class JwtTokenServiceImpl  implements JwtTokenService {
             UUID userUuid = UUID.fromString(userId);
             User user = userRepository.findById(userUuid)
                     .orElseThrow(() -> new UserNotFoundException("Usuario nao encontrado"));
-            return generateToken(user);
+            return generateAccessToken(user);
         } catch (
                 Exception e
         ){
@@ -116,4 +116,42 @@ public class JwtTokenServiceImpl  implements JwtTokenService {
     }
 
 
+    @Override
+    public void invalidateRefreshToken(String refreshToken) {
+        try{
+            if(!tokenService.isBlacklisted(refreshToken)) {
+                tokenService.addToBlacklist(refreshToken);
+            }
+            String userId = extractUserId(refreshToken);
+            tokenService.removeRefreshToken(userId);
+        } catch (Exception e){
+            log.error(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public boolean refreshTokenExists(String refreshToken) {
+        try {
+
+            if (tokenService.isBlacklisted(refreshToken)) {
+                return false;
+            }
+            String userId = extractUserId(refreshToken);
+            if (userId == null) {
+                return false;
+            }
+
+            String storedToken = tokenService.getRefreshToken(userId);
+            if (storedToken == null) {
+                return false;
+            }
+            boolean isValid = refreshToken.equals(storedToken);
+
+            return isValid;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return false;
+    }
 }

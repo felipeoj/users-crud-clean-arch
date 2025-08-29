@@ -45,4 +45,19 @@ public class AuthController {
     public ResponseEntity<String> handleInvalidCredentials() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais Invalidas.");
     }
+
+    @PostMapping("/refresh")
+    public  ResponseEntity<Void> refresh(
+            @CookieValue(value = "refreshToken", required = false) String refreshToken
+    ){
+        return authService.refresh(refreshToken);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @CookieValue(value = "jwt", required = false) String accessToken,
+            @CookieValue(value = "refreshToken", required = false) String refreshToken
+    ) {
+        return authService.logout(accessToken, refreshToken);
+    }
 }
