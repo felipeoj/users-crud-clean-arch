@@ -63,7 +63,7 @@ public class SecurityConfig {
                         .xssProtection(xssProtection -> xssProtection
                                 .headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
                         .contentSecurityPolicy(csp -> csp
-                                .policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline' cdn.example.com; style-src 'self' 'unsafe-inline'"))
+                                .policyDirectives("default-src 'self'; script-src 'self' 'nonce-{nonce}' cdn.example.com; style-src 'self'"))
                         .frameOptions(frameOptions -> frameOptions.deny())
                         .httpStrictTransportSecurity(httpStrictTransportSecurity -> httpStrictTransportSecurity
                                 .includeSubDomains(true)
