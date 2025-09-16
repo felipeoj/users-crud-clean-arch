@@ -99,7 +99,7 @@ class LoginUseCaseTest {
         assertThrows(InvalidCredentialsException.class, () -> loginUseCase.login(dto));
 
         verify(userRepository).findByUsernameOrEmail("user_x");
-        verify(passwordEncoder).matches("Strong#122", "$2a$10$hash");
+        verify(passwordEncoder).matches("Strong#122", "$2a$10$hash24");
         verifyNoInteractions(jwtTokenService);
 
         }

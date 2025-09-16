@@ -9,6 +9,7 @@ import dev.felipeoj.users_crud.application.usecase.users.SoftDeleteUseCase;
 import dev.felipeoj.users_crud.application.usecase.users.UpdateUserUseCase;
 import dev.felipeoj.users_crud.domain.service.JwtTokenService;
 import dev.felipeoj.users_crud.domain.repository.UserRepository;
+import dev.felipeoj.users_crud.infrastructure.messaging.EventPublisher;
 import dev.felipeoj.users_crud.infrastructure.persistence.mapper.UserMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +41,9 @@ public class UseCaseConfiguration {
     @Bean
     public RegisterUserUseCase registerUserUseCase(
             UserRepository userRepository,
-            PasswordEncoder customPasswordEncoder) {
-        return new RegisterUserUseCase(userRepository, customPasswordEncoder);
+            PasswordEncoder customPasswordEncoder,
+            EventPublisher eventPublisher) {
+        return new RegisterUserUseCase(userRepository, customPasswordEncoder, eventPublisher);
     }
 
     @Bean
