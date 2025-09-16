@@ -51,14 +51,15 @@ public class UseCaseConfiguration {
         return new RefreshTokenUseCase(jwtTokenService);
     }
 
-    @Bean
-    public LoginUseCase loginUseCase(
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            JwtTokenService jwtTokenService
-    ) {
-        return new LoginUseCase(userRepository, passwordEncoder, jwtTokenService);
-    }
+        @Bean
+        public LoginUseCase loginUseCase(
+                UserRepository userRepository,
+                PasswordEncoder passwordEncoder,
+                JwtTokenService jwtTokenService,
+                EventPublisher eventPublisher
+        ) {
+            return new LoginUseCase(userRepository, passwordEncoder, jwtTokenService, eventPublisher);
+        }
 
 
 }
